@@ -82,4 +82,13 @@ Flask と pandas を用いて作成した、映画レコメンドWebアプリで
 ---
 
 ## ディレクトリ構成
+eigasyoukai_kadai/
+├─ backend/
+│ ├─ app.py
+│ ├─ requirements.txt
+│ └─ data/
+│ ├─ movies_100k.csv
+│ └─ ratings_100k.csv
+└─ frontend/
+└─ index.html
 
