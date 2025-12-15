@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>映画レコメンド</title>
+</head>
+<body>
+  <h1>好きな映画を選んでください（複数可）</h1>
+
+  <!-- 映画一覧 -->
+  <select id="movieSelect" multiple size="15" style="width:400px;"></select>
+
+  <p>
+    ※ Ctrlキー（MacはCmdキー）を押しながらクリックすると複数選択できます
+  </p>
+
+  <button onclick="getRecommendations()">おすすめを見る</button>
+
+  <h2>おすすめ映画：</h2>
+  <ul id="recommendList"></ul>
+
+  <script>
+    // ページ読み込み時に映画一覧を取得
+    const movieSelect = document.getElementById("movieSelect");
+    const recommendList = document.getElementById("recommendList");
+
+    fetch("/api/movies")
+      .then(response => response.json())
+      .then(movies => {
+        movies.forEach(movie => {
+          const option = document.createElement("option");
+          option.value = movie.movie_id;
+          option.textContent = movie.movie_title;
+          movieSelect.appendChild(option);
+        });
+      })
+      .catch(err => {
+        alert("映画一覧の取得に失敗しました");
+        console.error(err);
+      });
+
+    // おすすめ取得
+    function getRecommendations() {
+      // 選択された映画IDを配列で取得
+      const selectedIds = Array.from(movieSelect.selectedOptions)
+        .map(opt => Number(opt.value));
+
+      // おすすめAPIに送信
+      fetch("/api/recommend", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          movie_ids: selectedIds
+        })
+      })
+        .then(response => response.json())
+        .then(recommendations => {
+          recommendList.innerHTML = "";
+
+          if (recommendations.length === 0) {
+            const li = document.createElement("li");
+            li.textContent = "おすすめ映画が見つかりませんでした";
+            recommendList.appendChild(li);
+            return;
+          }
+
+          recommendations.forEach(movie => {
+            const li = document.createElement("li");
+            li.textContent = movie.movie_title;
+            recommendList.appendChild(li);
+          });
+        })
+        .catch(err => {
+          alert("おすすめの取得に失敗しました");
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>
