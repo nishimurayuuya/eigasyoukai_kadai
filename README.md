@@ -80,6 +80,44 @@ Flask と pandas を用いて作成した、映画レコメンドWebアプリで
 - HTML / JavaScript
 
 ---
+## Webサイトを動作させるために必要な手順
+
+本アプリはローカル環境で Flask サーバを起動して動作します。
+そのため、コマンドプロンプト（またはターミナル）の使用が必須です。
+
+### 1. 事前準備
+
+以下のソフトウェアがインストールされている必要があります。
+
+- Python 3.x
+- Git（GitHub からダウンロードする場合）
+
+### 2. リポジトリの取得
+
+GitHub から本リポジトリをダウンロードするか、
+以下のコマンドを使用して clone します。
+
+git clone https://github.com/nishimurayuuya/eigasyoukai_kadai.git
+コマンドプロンプト（またはターミナル）を起動し、本リポジトリ内の backend ディレクトリへ移動します。その後、アプリの動作に必要なライブラリをインストールします。まず以下のコマンドを実行して、Flask、pandas、numpy をインストールします。
+
+cd eigasyoukai_kadai/recommend-app/backend
+pip install flask pandas numpy
+
+requirements.txt が用意されている場合は、代わりに以下のコマンドを実行します。
+
+pip install -r requirements.txt
+
+ライブラリのインストールが完了したら、続けて以下のコマンドを実行し、Flask アプリを起動します。
+
+python app.py
+
+正常に起動すると、コマンドプロンプト上に「Running on http://127.0.0.1:5000」というメッセージが表示されます。この表示を確認した後、Web ブラウザを開き、以下の URL にアクセスします。
+
+http://127.0.0.1:5000
+
+映画一覧が画面に表示され、映画を選択して「おすすめを見る」ボタンを押すことで、おすすめ映画が表示されます。
+
+---
 
 ## ディレクトリ構成
 eigasyoukai_kadai/
